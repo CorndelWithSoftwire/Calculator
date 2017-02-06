@@ -13,6 +13,9 @@ namespace Calculator
       Console.WriteLine("Welcome to the calculator!");
       Console.WriteLine("==========================");
 
+      Console.Write("Please enter the operator: ");
+      string op = Console.ReadLine();
+
       Console.Write("Please enter the first number: ");
       string firstArgument = Console.ReadLine();
       int firstNumber = int.Parse(firstArgument);
@@ -21,7 +24,25 @@ namespace Calculator
       string secondArgument = Console.ReadLine();
       int secondNumber = int.Parse(secondArgument);
 
-      int answer = firstNumber*secondNumber;
+      int answer = 0;
+
+      if (op == "*")
+      {
+        answer = firstNumber*secondNumber;
+      }
+      else if (op == "/")
+      {
+        answer = firstNumber/secondNumber;
+      }
+      else if (op == "+")
+      {
+        answer = firstNumber + secondNumber;
+      }
+      else if (op == "-")
+      {
+        answer = firstNumber - secondNumber;
+      }
+
       Console.WriteLine("The answer is: " + answer);
 
       Console.ReadLine();
