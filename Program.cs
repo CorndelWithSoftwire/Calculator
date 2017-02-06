@@ -16,31 +16,36 @@ namespace Calculator
       Console.Write("Please enter the operator: ");
       string op = Console.ReadLine();
 
-      Console.Write("Please enter the first number: ");
-      string firstArgument = Console.ReadLine();
-      int firstNumber = int.Parse(firstArgument);
+      Console.Write("How many numbers do you want to " + op + "? ");
+      int count = int.Parse(Console.ReadLine());
 
-      Console.Write("Please enter the second number: ");
-      string secondArgument = Console.ReadLine();
-      int secondNumber = int.Parse(secondArgument);
+      int[] numbers = new int[count];
+      for (int index = 0; index < count; index++)
+      {
+        Console.Write("Please enter number " + (index + 1) + ": ");
+        numbers[index] = int.Parse(Console.ReadLine());
+      }
 
-      int answer = 0;
+      int answer = numbers[0];
 
-      if (op == "*")
+      for (int index = 1; index < count; index++)
       {
-        answer = firstNumber*secondNumber;
-      }
-      else if (op == "/")
-      {
-        answer = firstNumber/secondNumber;
-      }
-      else if (op == "+")
-      {
-        answer = firstNumber + secondNumber;
-      }
-      else if (op == "-")
-      {
-        answer = firstNumber - secondNumber;
+        if (op == "*")
+        {
+          answer = answer*numbers[index];
+        }
+        else if (op == "/")
+        {
+          answer = answer/numbers[index];
+        }
+        else if (op == "+")
+        {
+          answer = answer + numbers[index];
+        }
+        else if (op == "-")
+        {
+          answer = answer - numbers[index];
+        }
       }
 
       Console.WriteLine("The answer is: " + answer);
