@@ -10,25 +10,66 @@ namespace Calculator
   {
     static void Main(string[] args)
     {
+      PrintWelcomeMessage();
+
+      while (true)
+      {
+        PerformOneCalculation();
+      }
+    }
+
+    private static void PrintWelcomeMessage()
+    {
       Console.WriteLine("Welcome to the calculator!");
       Console.WriteLine("==========================");
+    }
 
+    private static void PerformOneCalculation()
+    {
+      var op = AskForOperator();
+      var numbers = AskForNumberArray(op);
+      var answer = CalculateAnswer(op, numbers);
+
+      Console.WriteLine("The answer is: " + answer);
+      Console.WriteLine();
+    }
+
+    private static string AskForOperator()
+    {
       Console.Write("Please enter the operator: ");
       string op = Console.ReadLine();
+      return op;
+    }
 
-      Console.Write("How many numbers do you want to " + op + "? ");
-      int count = int.Parse(Console.ReadLine());
+    private static int[] AskForNumberArray(string op)
+    {
+      var count = AskForNumber("How many numbers do you want to " + op + "? ");
 
       int[] numbers = new int[count];
       for (int index = 0; index < count; index++)
       {
-        Console.Write("Please enter number " + (index + 1) + ": ");
-        numbers[index] = int.Parse(Console.ReadLine());
+        numbers[index] = AskForNumber("Please enter number " + (index + 1) + ": ");
       }
+      return numbers;
+    }
 
+    private static int AskForNumber(string message)
+    {
+      int count;
+
+      do
+      {
+        Console.Write(message);
+      } while (!int.TryParse(Console.ReadLine(), out count));
+
+      return count;
+    }
+
+    private static int CalculateAnswer(string op, int[] numbers)
+    {
       int answer = numbers[0];
 
-      for (int index = 1; index < count; index++)
+      for (int index = 1; index < numbers.Length; index++)
       {
         if (op == "*")
         {
@@ -47,10 +88,7 @@ namespace Calculator
           answer = answer - numbers[index];
         }
       }
-
-      Console.WriteLine("The answer is: " + answer);
-
-      Console.ReadLine();
+      return answer;
     }
   }
 }
