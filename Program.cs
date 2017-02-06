@@ -13,6 +13,17 @@ namespace Calculator
       Console.WriteLine("Welcome to the calculator!");
       Console.WriteLine("==========================");
 
+      Console.Write("Please enter the first number: ");
+      string firstArgument = Console.ReadLine();
+      int firstNumber = int.Parse(firstArgument);
+
+      Console.Write("Please enter the second number: ");
+      string secondArgument = Console.ReadLine();
+      int secondNumber = int.Parse(secondArgument);
+
+      int answer = firstNumber*secondNumber;
+      Console.WriteLine("The answer is: " + answer);
+
       Console.ReadLine();
     }
   }
