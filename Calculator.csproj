@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateCalculator.cs" />
+    <Compile Include="NumberCalculator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Prompts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
