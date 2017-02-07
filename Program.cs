@@ -13,6 +13,8 @@ namespace Calculator
 
     static void Main(string[] args)
     {
+      var logger = new Logger();
+
       PrintWelcomeMessage();
 
       while (true)
@@ -21,11 +23,11 @@ namespace Calculator
 
         if (calculationMode == NumberCalculator)
         {
-          new NumberCalculator().PerformOneCalculation();
+          new NumberCalculator(logger).PerformOneCalculation();
         }
         else
         {
-          new DateCalculator().PerformOneCalculation();
+          new DateCalculator(logger).PerformOneCalculation();
         }
       }
     }
