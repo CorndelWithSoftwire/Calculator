@@ -8,14 +8,34 @@ namespace Calculator
 {
   class Program
   {
+    private const int NumberCalculator = 1;
+    private const int DateCalculator = 2;
+
     static void Main(string[] args)
     {
       PrintWelcomeMessage();
 
       while (true)
       {
-        PerformOneCalculation();
+        int calculationMode = AskForCalculationMode();
+
+        if (calculationMode == NumberCalculator)
+        {
+          PerformOneNumberCalculation();
+        }
+        else
+        {
+          PerformOneDateCalculation();
+        }
       }
+    }
+
+    private static int AskForCalculationMode()
+    {
+      Console.WriteLine("Which calculator mode do you want?");
+      Console.WriteLine(" {0}) Numbers", NumberCalculator);
+      Console.WriteLine(" {0}) Dates", DateCalculator);
+      return AskForNumber("> ");
     }
 
     private static void PrintWelcomeMessage()
@@ -24,13 +44,13 @@ namespace Calculator
       Console.WriteLine("==========================");
     }
 
-    private static void PerformOneCalculation()
+    private static void PerformOneNumberCalculation()
     {
       var op = AskForOperator();
       var numbers = AskForNumberArray(op);
       var answer = CalculateAnswer(op, numbers);
 
-      Console.WriteLine("The answer is: " + answer);
+      Console.WriteLine("The answer is: {0}", answer);
       Console.WriteLine();
     }
 
@@ -43,12 +63,12 @@ namespace Calculator
 
     private static int[] AskForNumberArray(string op)
     {
-      var count = AskForNumber("How many numbers do you want to " + op + "? ");
+      var count = AskForNumber(string.Format("How many numbers do you want to {0}? ", op));
 
       int[] numbers = new int[count];
       for (int index = 0; index < count; index++)
       {
-        numbers[index] = AskForNumber("Please enter number " + (index + 1) + ": ");
+        numbers[index] = AskForNumber(string.Format("Please enter number {0}: ", index + 1));
       }
       return numbers;
     }
@@ -89,6 +109,27 @@ namespace Calculator
         }
       }
       return answer;
+    }
+    private static void PerformOneDateCalculation()
+    {
+      var date = AskForDate("Please enter a date: ");
+      var number = AskForNumber("Please enter the number of days to add: ");
+      var answer = date.AddDays(number);
+
+      Console.WriteLine("The answer is: {0:dd/MM/yyyy}", answer);
+      Console.WriteLine();
+    }
+
+    private static DateTime AskForDate(string message)
+    {
+      DateTime date;
+
+      do
+      {
+        Console.Write(message);
+      } while (!DateTime.TryParse(Console.ReadLine(), out date));
+
+      return date;
     }
   }
 }
