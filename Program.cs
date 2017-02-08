@@ -17,6 +17,11 @@ namespace Calculator
     static void Main(string[] args)
     {
       var logger = new Logger();
+      var calculators = new Dictionary<CalculatorType, ICalculator>
+      {
+        {CalculatorType.Number, new NumberCalculator(logger)},
+        {CalculatorType.Date, new DateCalculator(logger)}
+      };
 
       PrintWelcomeMessage();
 
@@ -25,15 +30,7 @@ namespace Calculator
         try
         {
           CalculatorType calculationMode = AskForCalculationMode();
-
-          if (calculationMode == CalculatorType.Number)
-          {
-            new NumberCalculator(logger).PerformOneCalculation();
-          }
-          else
-          {
-            new DateCalculator(logger).PerformOneCalculation();
-          }
+          calculators[calculationMode].PerformOneCalculation();
         }
         catch (InvalidOperatorException e)
         {

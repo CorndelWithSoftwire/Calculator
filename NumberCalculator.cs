@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Calculator
 {
-  public class NumberCalculator
+  public class NumberCalculator : ICalculator
   {
     private Logger logger;
 
@@ -16,7 +16,7 @@ namespace Calculator
     public void PerformOneCalculation()
     {
       var op = Prompts.AskForString("Please enter the operator: ");
-      var numbers = Prompts.AskForNumberArray(string.Format("Please enter the numbers to {0}. ", op));
+      var numbers = Prompts.AskForNumberArray($"Please enter the numbers to {op}. ");
       var answer = CalculateAnswer(op, numbers);
 
       logger.LogCalculation(string.Join(op, numbers), answer.ToString());

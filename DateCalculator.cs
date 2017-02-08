@@ -2,7 +2,7 @@
 
 namespace Calculator
 {
-  public class DateCalculator
+  public class DateCalculator : ICalculator
   {
     private Logger logger;
 
@@ -17,7 +17,7 @@ namespace Calculator
       var number = Prompts.AskForNumber("Please enter the number of days to add: ");
       var answer = date.AddDays(number);
 
-      logger.LogCalculation(string.Format("{0:dd/MM/yyyy} + {1}", date, number), answer.ToString("dd/MM/yyyy"));
+      logger.LogCalculation($"{date:dd/MM/yyyy} + {number}", answer.ToString("dd/MM/yyyy"));
       Console.WriteLine("The answer is: {0:dd/MM/yyyy}", answer);
       Console.WriteLine();
     }
