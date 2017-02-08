@@ -26,24 +26,23 @@ namespace Calculator
 
     private int CalculateAnswer(string op, List<int> numbers)
     {
-      if (op == "*")
+      switch (op)
       {
-        return numbers.Aggregate(1, (acc, number) => acc*number);
-      }
-      else if (op == "/")
-      {
-        return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc/number);
-      }
-      else if (op == "+")
-      {
-        return numbers.Sum();
-      }
-      else if (op == "-")
-      {
-        return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc - number);
-      }
+        case "*":
+          return numbers.Aggregate(1, (acc, number) => acc*number);
 
-      return -1;
+        case "/":
+          return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc/number);
+
+        case "+":
+          return numbers.Sum();
+
+        case "-":
+          return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc - number);
+
+        default:
+          throw new InvalidOperatorException(op);
+      }
     }
   }
 }

@@ -8,8 +8,11 @@ namespace Calculator
 {
   class Program
   {
-    private const int NumberCalculator = 1;
-    private const int DateCalculator = 2;
+    enum CalculatorType
+    {
+      Number = 1,
+      Date = 2
+    }
 
     static void Main(string[] args)
     {
@@ -19,15 +22,23 @@ namespace Calculator
 
       while (true)
       {
-        int calculationMode = AskForCalculationMode();
+        try
+        {
+          CalculatorType calculationMode = AskForCalculationMode();
 
-        if (calculationMode == NumberCalculator)
-        {
-          new NumberCalculator(logger).PerformOneCalculation();
+          if (calculationMode == CalculatorType.Number)
+          {
+            new NumberCalculator(logger).PerformOneCalculation();
+          }
+          else
+          {
+            new DateCalculator(logger).PerformOneCalculation();
+          }
         }
-        else
+        catch (InvalidOperatorException e)
         {
-          new DateCalculator(logger).PerformOneCalculation();
+          Console.WriteLine("Sorry, there was a problem: " + e.Message);
+          Console.WriteLine();
         }
       }
     }
@@ -38,12 +49,12 @@ namespace Calculator
       Console.WriteLine("==========================");
     }
 
-    private static int AskForCalculationMode()
+    private static CalculatorType AskForCalculationMode()
     {
       Console.WriteLine("Which calculator mode do you want?");
-      Console.WriteLine(" {0}) Numbers", NumberCalculator);
-      Console.WriteLine(" {0}) Dates", DateCalculator);
-      return Prompts.AskForNumber("> ");
+      Console.WriteLine(" {0}) Numbers", (int)CalculatorType.Number);
+      Console.WriteLine(" {0}) Dates", (int)CalculatorType.Date);
+      return (CalculatorType)Prompts.AskForNumber("> ");
     }
   }
 }
