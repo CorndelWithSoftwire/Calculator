@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Calculator
 {
@@ -22,30 +24,26 @@ namespace Calculator
       Console.WriteLine();
     }
 
-    private int CalculateAnswer(string op, int[] numbers)
+    private int CalculateAnswer(string op, List<int> numbers)
     {
-      int answer = numbers[0];
-
-      for (int index = 1; index < numbers.Length; index++)
+      if (op == "*")
       {
-        if (op == "*")
-        {
-          answer = answer * numbers[index];
-        }
-        else if (op == "/")
-        {
-          answer = answer / numbers[index];
-        }
-        else if (op == "+")
-        {
-          answer = answer + numbers[index];
-        }
-        else if (op == "-")
-        {
-          answer = answer - numbers[index];
-        }
+        return numbers.Aggregate(1, (acc, number) => acc*number);
       }
-      return answer;
+      else if (op == "/")
+      {
+        return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc/number);
+      }
+      else if (op == "+")
+      {
+        return numbers.Sum();
+      }
+      else if (op == "-")
+      {
+        return numbers.Skip(1).Aggregate(numbers[0], (acc, number) => acc - number);
+      }
+
+      return -1;
     }
   }
 }

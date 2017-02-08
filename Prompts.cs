@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Calculator
 {
@@ -6,14 +7,35 @@ namespace Calculator
   {
     public static int AskForNumber(string message)
     {
-      int count;
+      while (true)
+      {
+        int? maybeNumber = AskForOptionalNumber(message);
 
-      do
+        if (maybeNumber.HasValue)
+        {
+          return maybeNumber.Value;
+        }
+      }
+    }
+
+    public static int? AskForOptionalNumber(string message)
+    {
+      while (true)
       {
         Console.Write(message);
-      } while (!int.TryParse(Console.ReadLine(), out count));
+        string input = Console.ReadLine();
 
-      return count;
+        if (string.IsNullOrEmpty(input))
+        {
+          return null;
+        }
+
+        int number;
+        if (int.TryParse(input, out number))
+        {
+          return number;
+        }
+      }
     }
 
     public static DateTime AskForDate(string message)
@@ -28,15 +50,25 @@ namespace Calculator
       return date;
     }
 
-    public static int[] AskForNumberArray(string message)
+    public static List<int> AskForNumberArray(string message)
     {
-      var count = AskForNumber(message + "How many numbers do you want? ");
+      Console.WriteLine(message);
+      List<int> numbers = new List<int>();
 
-      int[] numbers = new int[count];
-      for (int index = 0; index < count; index++)
+      while (true)
       {
-        numbers[index] = AskForNumber(string.Format("Please enter number {0}: ", index + 1));
+        int? number = AskForOptionalNumber("  Please enter the next number: ");
+
+        if (number.HasValue)
+        {
+          numbers.Add(number.Value);
+        }
+        else
+        {
+          break;
+        }
       }
+
       return numbers;
     }
 
